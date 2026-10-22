@@ -48,7 +48,7 @@ function CardButton({ onClick, children, danger = false }) {
     <button
       type="button"
       onClick={onClick}
-      className={`relative z-20 inline-flex h-8 items-center rounded-sm border px-2.5 text-[8px] font-bold uppercase tracking-[0.14em] transition-colors ${
+      className={`relative z-20 inline-flex h-8 shrink-0 items-center whitespace-nowrap rounded-sm border px-2.5 text-[8px] font-bold uppercase tracking-[0.14em] transition-colors ${
         danger
           ? "border-red-400/20 text-red-300 hover:bg-red-400/10"
           : "border-white/10 text-silver hover:border-gold/40 hover:text-gold"
@@ -122,8 +122,8 @@ function CategoryCard({
         </p>
       </div>
 
-      <div className="mt-5 flex items-end justify-between gap-3 border-t border-white/[0.06] px-5 py-3">
-        <dl className="flex gap-5">
+      <div className="mt-5 flex flex-wrap items-end justify-between gap-3 border-t border-white/[0.06] px-5 py-3">
+        <dl className="flex shrink-0 gap-5">
           <div>
             <dt className="text-[8px] font-bold uppercase tracking-[0.2em] text-muted">
               {copy.catalogue.collections}
@@ -141,7 +141,7 @@ function CategoryCard({
             </dd>
           </div>
         </dl>
-        <div className="flex items-center gap-1.5">
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-1.5">
           <ReorderControls
             dragLabel={copy.catalogue.dragItem.replace("{name}", entry.name)}
             upLabel={copy.form.moveUp}
@@ -235,14 +235,14 @@ function CollectionCard({
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-3 px-4 py-3">
-        <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-muted">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+        <p className="min-w-0 text-[9px] font-bold uppercase tracking-[0.18em] text-muted">
           <span className="tnum text-gold">{entry.productCount}</span>{" "}
           {entry.productCount === 1
             ? copy.catalogue.productOne
             : copy.catalogue.productMany}
         </p>
-        <div className="flex items-center gap-1.5">
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-1.5">
           <ReorderControls
             dragLabel={copy.catalogue.dragItem.replace("{name}", entry.name)}
             upLabel={copy.form.moveUp}
@@ -328,11 +328,11 @@ function ProductCard({
         </h3>
       </div>
 
-      <div className="flex items-center justify-between gap-2 border-t border-white/[0.06] px-3 py-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.06] px-3 py-2">
         <span className="hidden min-w-0 truncate text-[9px] tracking-[0.08em] text-muted/80 sm:inline">
           /{entry.slug}
         </span>
-        <div className="ml-auto flex shrink-0 items-center gap-1.5">
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-1.5">
           <ReorderControls
             dragLabel={copy.catalogue.dragItem.replace("{name}", entry.name)}
             upLabel={copy.form.moveUp}
