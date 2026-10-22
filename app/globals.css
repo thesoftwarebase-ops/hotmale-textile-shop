@@ -1,0 +1,641 @@
+@import "tailwindcss";
+
+/* HOTMALE theme tokens — values originate in data/site.js `theme`.
+ * Exposed as CSS variables on :root so the CMS can edit them later
+ * (mirrored into the SiteSettings document). */
+
+:root {
+  /* Dark surfaces (default) */
+  --ink: #080808;
+  --charcoal: #121212;
+  --graphite: #242424;
+  --steel: #3a3a3a;
+
+  /* Light surfaces (product grids and long-form content only) */
+  --bone: #f5f4ee;
+  --paper: #ffffff;
+  --line: #e2e1d9;
+
+  /* Text */
+  --text-dark-primary: #f8f8e8;
+  --text-dark-secondary: #b8b8b8;
+  --text-dark-muted: #8a8a8a;
+  --text-light-primary: #080808;
+  --text-light-secondary: #55554f;
+
+  /* Accent (gold, from the logo flames) */
+  --flame-gold: #e6c440;
+  --flame-highlight: #f2da5c;
+  --deep-gold: #b8991f;
+  --gold-sheen: linear-gradient(135deg, #f7e67a, #e6c440 55%, #b8991f);
+  --silver-sheen: linear-gradient(180deg, #f8f8e8, #b8b8b8 60%, #8a8a8a);
+
+  /* Shape */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-charcoal: var(--charcoal);
+  --color-graphite: var(--graphite);
+  --color-steel: var(--steel);
+
+  --color-bone: var(--bone);
+  --color-paper: var(--paper);
+  --color-line: var(--line);
+
+  --color-cream: var(--text-dark-primary);
+  --color-silver: var(--text-dark-secondary);
+  --color-muted: var(--text-dark-muted);
+  --color-coal: var(--text-light-primary);
+  --color-smoke: var(--text-light-secondary);
+
+  --color-gold: var(--flame-gold);
+  --color-gold-highlight: var(--flame-highlight);
+  --color-gold-deep: var(--deep-gold);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+/* Base — dark is the dominant mood, like the logo. */
+
+body {
+  background: var(--ink);
+  color: var(--text-dark-primary);
+  font-family: var(--font-body), system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--flame-gold);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--flame-highlight);
+  outline-offset: 2px;
+}
+
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Gold sheen text — the brand's flame gradient painted on type. */
+.gold-sheen-text {
+  background: var(--gold-sheen);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Editorial numeral — a hollow gold index that floods with the brand
+ * highlight when the parent group is hovered. */
+.outline-numeral {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(230, 196, 64, 0.6);
+  transition:
+    color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    -webkit-text-stroke-color 0.5s ease;
+}
+
+.group:hover .outline-numeral,
+.group:focus-visible .outline-numeral {
+  color: var(--flame-highlight);
+  -webkit-text-stroke-color: rgba(242, 218, 92, 0.95);
+}
+
+/* Stage zoom — the collection stage pushes in when the active
+ * collection changes. */
+@keyframes stage-zoom {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.stage-zoom {
+  animation: stage-zoom 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Card sheen — a soft diagonal highlight that travels across a card on
+ * hover. Used by the offer posters. */
+.card-sheen::after {
+  content: "";
+  position: absolute;
+  inset: -50% -20%;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.07) 50%,
+    transparent 58%
+  );
+  transform: translateX(-70%);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.group:hover .card-sheen::after,
+.group:focus-visible .card-sheen::after {
+  transform: translateX(70%);
+}
+
+/* Sheen sweep — cream type that floods with the brand's flame gold in a
+ * travelling highlight when the parent group is hovered. */
+.sheen-sweep {
+  background-image: linear-gradient(
+    100deg,
+    #f8f8e8 18%,
+    #e6c440 42%,
+    #f2da5c 52%,
+    #f8f8e8 78%
+  );
+  background-size: 260% 100%;
+  background-position: 92% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background-position 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .sheen-sweep,
+.group:focus-visible .sheen-sweep {
+  background-position: 8% 0;
+}
+
+/* Outline-to-fill display type: hollow gold that floods with the brand
+ * highlight when the parent group is hovered or focused. */
+.outline-fill {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(230, 196, 64, 0.5);
+  transition:
+    color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    -webkit-text-stroke-color 0.45s ease;
+}
+
+.group:hover .outline-fill,
+.group:focus-visible .outline-fill {
+  color: var(--flame-highlight);
+  -webkit-text-stroke-color: rgba(242, 218, 92, 0.95);
+}
+
+/* Tabular numerals for prices. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Slim scrollbar for the admin sidebar. The native Windows scrollbar is
+ * loud against the near-black panel, so it is replaced by a thin
+ * gold-tinted rail that stays out of the way until hovered. */
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(230, 196, 64, 0.32) transparent;
+}
+
+.scroll-slim::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-slim::-webkit-scrollbar-thumb {
+  background-color: rgba(230, 196, 64, 0.3);
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(230, 196, 64, 0.6);
+}
+
+.scroll-slim::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Marquee — pure CSS loop, pauses on hover and when off screen
+ * (animation pauses automatically when the tab is hidden). */
+.marquee-inner {
+  display: inline-flex;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track-slow {
+  animation: marquee 45s linear infinite;
+}
+
+.marquee-track-fast {
+  animation: marquee 18s linear infinite;
+}
+
+.marquee-chunk {
+  padding-right: 3rem;
+}
+
+.marquee-link:hover .marquee-inner,
+.marquee:hover .marquee-inner {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Hero dot progress: the active dot fills across one autoplay
+ * interval, stories-style. Duration is set inline from the component;
+ * the global reduced-motion rule collapses it to an instant fill. */
+@keyframes hero-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.hero-progress {
+  width: 0%;
+  animation-name: hero-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+/* Catalogue tiles rise in with a small stagger (delay set inline per
+ * tile). Replays whenever a filter remounts the grid; the global
+ * reduced-motion rule collapses it to an instant appearance. */
+@keyframes tile-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tile-rise {
+  animation: tile-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Instagram brand gradient text (owner-requested deviation from the
+ * neutral+gold-only rule — contained to Instagram elements only). */
+.insta-text {
+  background: linear-gradient(
+    45deg,
+    #f09433,
+    #e6683c,
+    #dc2743,
+    #cc2366,
+    #bc1888
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Utility-strip tagline: words rise in sequence on load, then each
+ * carries its own endless gold-sheen sweep. Gradient AND motion live on
+ * the SAME element — a transformed descendant inside a
+ * background-clip:text parent goes permanently invisible in Chrome, so
+ * the clip must never sit on an ancestor of moving text. Hovering the
+ * strip speeds the sweep up. Anything without clip support falls back
+ * to plain cream text. */
+.tagline-word {
+  display: inline-block;
+  background: linear-gradient(
+    110deg,
+    #8a8a8a 20%,
+    #f8f8e8 40%,
+    #f2da5c 50%,
+    #f8f8e8 60%,
+    #8a8a8a 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation:
+    tagline-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both,
+    tagline-sheen 7s linear infinite;
+}
+
+.tagline-sh:hover .tagline-word {
+  animation-duration: 0.8s, 1.6s;
+}
+
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .tagline-word {
+    background: none;
+    color: #f8f8e8;
+  }
+}
+
+@keyframes tagline-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tagline-sheen {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Rule draw-in entrance (transform-only, once on load). */
+.brush-draw {
+  transform-origin: left center;
+  animation: brush-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s both;
+}
+
+@keyframes brush-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Utility-strip ambient shine: a faint gold light that drifts across
+ * every 12s. Freezes under prefers-reduced-motion via the global rule. */
+.strip-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.strip-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(230, 196, 64, 0.07) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: strip-shine 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes strip-shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Footer watermark band: strong bronze hollow outline, hard black
+ * keyline, whisper of white aura. Hover floods the letters with the
+ * logo's off-white. */
+.footer-metal {
+  color: transparent;
+  -webkit-text-stroke: 5px #97801c;
+  filter:
+    drop-shadow(0 2px 0 #000000)
+    drop-shadow(0 0 16px rgba(248, 248, 232, 0.05));
+  transition: color 0.6s ease;
+}
+
+.footer-band:hover .footer-metal {
+  color: #f8f8e8;
+}
+
+@supports not (-webkit-text-stroke: 1px #000000) {
+  .footer-metal {
+    color: #97801c;
+  }
+}
+
+/* Route enter: new pages rise in once on mount (transform + opacity).
+ * Short by contract (under 400ms).
+ *
+ * The fill mode is `backwards`, not `both`: with `both` the final
+ * keyframe's transform stays applied to the wrapper forever, and a
+ * transformed ancestor is a containing block that silently breaks
+ * `position: sticky` for every descendant (the featured-collections
+ * stage). `backwards` still hides the page before the animation
+ * starts, then releases the transform. */
+.page-enter {
+  animation: page-in 0.35s ease backwards;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loader progress hairline: sweeps in, sweeps out, loops. */
+.loader-bar {
+  animation: loader-bar 1s ease-in-out infinite;
+}
+
+@keyframes loader-bar {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  49% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+/* Outlined display text: hollow gold, responsive stroke weight.
+ * Falls back to solid gold where text-stroke is unsupported. */
+.text-outline-gold {
+  color: transparent;
+  -webkit-text-stroke: 1px #e6c440;
+}
+
+@media (min-width: 768px) {
+  .text-outline-gold {
+    -webkit-text-stroke-width: 2px;
+  }
+}
+
+@supports not (-webkit-text-stroke: 1px #000000) {
+  .text-outline-gold {
+    color: #e6c440;
+  }
+}
+
+/* Collection product carousel — 3D coverflow fan. Cards are keyed by
+ * their slot offset from the active card, so five, seven or eight
+ * products all share the same geometry; only the dot count changes.
+ * Offsets beyond ±2 are parked far behind (opacity 0) and are marked
+ * inert in the component. */
+.product-carousel {
+  --card-w: clamp(9.5rem, 17vw, 15.5rem);
+  --card-footer: 4.5rem;
+}
+
+.product-carousel-clip {
+  overflow: hidden;
+}
+
+.product-carousel-stage {
+  position: relative;
+  height: calc(var(--card-w) * 4 / 3 + var(--card-footer) + 1.25rem);
+  perspective: 1600px;
+  touch-action: pan-y;
+}
+
+.product-carousel .product-card-footer {
+  height: var(--card-footer);
+}
+
+.product-carousel-card {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: var(--card-w);
+  margin-left: calc(var(--card-w) / -2);
+  transition:
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+}
+
+.product-carousel-card[data-slot="0"] {
+  z-index: 30;
+  opacity: 1;
+  transform: translateX(0) translateZ(0) rotateY(0deg) scale(1);
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.55));
+}
+
+.product-carousel-card[data-slot="1"],
+.product-carousel-card[data-slot="-1"] {
+  z-index: 20;
+  opacity: 0.85;
+}
+
+.product-carousel-card[data-slot="1"] {
+  transform: translateX(62%) translateZ(-130px) rotateY(-32deg) scale(0.92);
+}
+
+.product-carousel-card[data-slot="-1"] {
+  transform: translateX(-62%) translateZ(-130px) rotateY(32deg) scale(0.92);
+}
+
+.product-carousel-card[data-slot="2"],
+.product-carousel-card[data-slot="-2"] {
+  z-index: 10;
+  opacity: 0.45;
+}
+
+.product-carousel-card[data-slot="2"] {
+  transform: translateX(112%) translateZ(-300px) rotateY(-44deg) scale(0.82);
+}
+
+.product-carousel-card[data-slot="-2"] {
+  transform: translateX(-112%) translateZ(-300px) rotateY(44deg) scale(0.82);
+}
+
+.product-carousel-card[data-slot="3"],
+.product-carousel-card[data-slot="-3"] {
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.product-carousel-card[data-slot="3"] {
+  transform: translateX(150%) translateZ(-460px) rotateY(-50deg) scale(0.7);
+}
+
+.product-carousel-card[data-slot="-3"] {
+  transform: translateX(-150%) translateZ(-460px) rotateY(50deg) scale(0.7);
+}
+
+@media (max-width: 767px) {
+  .product-carousel {
+    --card-w: clamp(9rem, 42vw, 11.5rem);
+  }
+
+  .product-carousel-stage {
+    perspective: 1100px;
+  }
+
+  .product-carousel-card[data-slot="1"] {
+    transform: translateX(56%) translateZ(-90px) rotateY(-30deg) scale(0.92);
+  }
+
+  .product-carousel-card[data-slot="-1"] {
+    transform: translateX(-56%) translateZ(-90px) rotateY(30deg) scale(0.92);
+  }
+
+  .product-carousel-card[data-slot="2"] {
+    opacity: 0.3;
+    transform: translateX(88%) translateZ(-190px) rotateY(-42deg) scale(0.82);
+  }
+
+  .product-carousel-card[data-slot="-2"] {
+    opacity: 0.3;
+    transform: translateX(-88%) translateZ(-190px) rotateY(42deg) scale(0.82);
+  }
+}
+
+/* Graceful degradation: no smooth scrolling or transitions when the
+ * user prefers reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

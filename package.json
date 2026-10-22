@@ -1,0 +1,33 @@
+{
+  "name": "hotmale",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "cms:seed": "node --env-file-if-exists=.env.local scripts/seed-content.mjs",
+    "cms:audit-images": "node --env-file-if-exists=.env.local scripts/audit-images.mjs",
+    "admin:create": "node --env-file-if-exists=.env.local scripts/create-admin.mjs"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "jose": "^6.2.13",
+    "lenis": "^1.3.27",
+    "mongodb": "^7.7.0",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/turbopack": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4"
+  }
+}
