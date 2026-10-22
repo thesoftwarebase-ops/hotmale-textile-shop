@@ -2124,6 +2124,8 @@ export const site = {
         deleteTitle: "Delete {name}?",
         deleteBody:
           "This cannot be undone. The item disappears from the public site as soon as you delete it.",
+        deleteCollectionBody:
+          "This cannot be undone. The collection and every product inside it disappear from the public site.",
         deleteBlocked:
           "This still has content inside it. Remove that first, then delete it.",
         deleteIt: "Delete permanently",

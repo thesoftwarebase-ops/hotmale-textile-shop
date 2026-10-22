@@ -147,17 +147,15 @@ export async function DELETE(request, { params }) {
     }
 
     if (resource === "collections") {
-      const [productCount, homepage] = await Promise.all([
+      await Promise.all([
         db
           .collection("products")
-          .countDocuments({ collection: current.slug }),
-        db.collection("site_content").findOne({ _id: "homepage" }),
+          .deleteMany({ collection: current.slug }),
+        db.collection("site_content").updateOne(
+          { _id: "homepage" },
+          { $pull: { "value.featuredCollectionSlugs": current.slug } },
+        ),
       ]);
-      const featured =
-        homepage?.value?.featuredCollectionSlugs?.includes(current.slug);
-      if (productCount > 0 || featured) {
-        return json({ ok: false, code: "in_use" }, 409);
-      }
     }
 
     if (resource === "stores") {
@@ -183,7 +181,7 @@ export async function DELETE(request, { params }) {
 
     const paths = [];
     if (resource === "collections") {
-      paths.push(`/collections/${current.slug}`);
+      paths.push(`/collections/${current.slug}`, "/collections", "/");
     }
     if (resource === "stores") {
       paths.push(`/stores/${current.slug}`);

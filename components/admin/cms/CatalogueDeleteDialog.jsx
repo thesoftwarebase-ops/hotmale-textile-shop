@@ -108,7 +108,9 @@ export default function CatalogueDeleteDialog({
 
       <div className="px-5 py-5">
         <p className="text-sm leading-6 text-silver">
-          {ns.deleteBody}
+          {resource === "collections"
+            ? ns.deleteCollectionBody || ns.deleteBody
+            : ns.deleteBody}
         </p>
         {error ? (
           <p
