@@ -154,10 +154,14 @@ function CategoryCard({
             canDown={canDown}
             ordering={ordering}
           />
-          <CardButton onClick={() => onEdit(entry)}>{copy.list.edit}</CardButton>
-          <CardButton danger onClick={() => onDelete(entry)}>
-            {copy.list.delete}
-          </CardButton>
+          <span className="flex shrink-0 items-center gap-1.5">
+            <CardButton onClick={() => onEdit(entry)}>
+              {copy.list.edit}
+            </CardButton>
+            <CardButton danger onClick={() => onDelete(entry)}>
+              {copy.list.delete}
+            </CardButton>
+          </span>
         </div>
       </div>
     </article>
@@ -256,10 +260,14 @@ function CollectionCard({
             ordering={ordering}
             compact
           />
-          <CardButton onClick={() => onEdit(entry)}>{copy.list.edit}</CardButton>
-          <CardButton danger onClick={() => onDelete(entry)}>
-            {copy.list.delete}
-          </CardButton>
+          <span className="flex shrink-0 items-center gap-1.5">
+            <CardButton onClick={() => onEdit(entry)}>
+              {copy.list.edit}
+            </CardButton>
+            <CardButton danger onClick={() => onDelete(entry)}>
+              {copy.list.delete}
+            </CardButton>
+          </span>
         </div>
       </div>
     </article>
@@ -346,10 +354,14 @@ function ProductCard({
             ordering={ordering}
             compact
           />
-          <CardButton onClick={() => onEdit(entry)}>{copy.list.edit}</CardButton>
-          <CardButton danger onClick={() => onDelete(entry)}>
-            {copy.list.delete}
-          </CardButton>
+          <span className="flex shrink-0 items-center gap-1.5">
+            <CardButton onClick={() => onEdit(entry)}>
+              {copy.list.edit}
+            </CardButton>
+            <CardButton danger onClick={() => onDelete(entry)}>
+              {copy.list.delete}
+            </CardButton>
+          </span>
         </div>
       </div>
     </article>
